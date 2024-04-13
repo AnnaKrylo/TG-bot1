@@ -3,6 +3,7 @@ import logging
 import requests
 from dotenv import load_dotenv
 import os
+from gpt import get_advice
 
 load_dotenv()
 API_TOKEN = os.getenv('TOKEN')
@@ -61,9 +62,10 @@ def echo_audio(message):
     count_parasites = sum(1 for word in textt if word in parasite_dictionary)
     cleaned_text = [word for word in textt if word not in parasite_dictionary]
     replaced_text = ' '.join(cleaned_text)
+    tep = get_advice(replaced_text)
 
     reply = (f"Количество слов-паразитов: {count_parasites}"
-             f"\nТекст после удаления:\n {replaced_text}")
+             f"\nТекст после удаления:\n {tep}")
     bot.reply_to(message, response_text)
     bot.reply_to(message, reply)
 
